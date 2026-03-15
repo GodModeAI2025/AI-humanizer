@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Humanizer — Texte menschlicher machen</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600;7..72,700;7..72,800;7..72,900&family=DM+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#faf8f5;
+  --bg2:#f2efe9;
+  --bg-dark:#1a1714;
+  --surface:#fff;
+  --surface-hover:#f7f5f0;
+  --border:#e5e0d8;
+  --border-light:#ede9e2;
+  --accent:#c44d2b;
+  --accent-light:#e86f4f;
+  --accent-dark:#a03d20;
+  --accent-bg:rgba(196,77,43,.06);
+  --accent-bg2:rgba(196,77,43,.03);
+  --ink:#1a1714;
+  --ink-light:#5c564d;
+  --ink-lighter:#8a8379;
+  --ink-faint:#b5afa6;
+  --warm-cream:#fefcf8;
+  --warm-blush:#fdf0eb;
+  --warm-sage:#e8ece4;
+  --radius:14px;
+  --radius-sm:8px;
+  --radius-lg:20px;
+  --shadow-sm:0 1px 3px rgba(26,23,20,.04),0 1px 2px rgba(26,23,20,.06);
+  --shadow-md:0 4px 16px rgba(26,23,20,.06),0 1px 4px rgba(26,23,20,.04);
+  --shadow-lg:0 12px 40px rgba(26,23,20,.08),0 4px 12px rgba(26,23,20,.04);
+  --shadow-xl:0 24px 60px rgba(26,23,20,.1),0 8px 20px rgba(26,23,20,.05);
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--ink);
+  overflow-x:hidden;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== TEXTURE ===== */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:.35;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E");
+  background-size:150px 150px;
+}
+
+::selection{background:var(--warm-blush);color:var(--accent-dark)}
+::-webkit-scrollbar{width:7px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-faint)}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fade-up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes slide-left{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slide-right{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes underline-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes pencil-draw{to{stroke-dashoffset:0}}
+@keyframes gentle-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.reveal{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+.reveal-d4{transition-delay:.4s}
+.reveal-d5{transition-delay:.5s}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:1rem 2.5rem;
+  background:rgba(250,248,245,.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .35s ease;
+}
+nav.scrolled{border-bottom-color:var(--border-light);box-shadow:var(--shadow-sm)}
+.nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.nav-logo-mark{
+  width:34px;height:34px;border-radius:9px;
+  background:var(--accent);display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.85rem;
+  transition:transform .3s ease;
+}
+.nav-logo:hover .nav-logo-mark{transform:rotate(-6deg)}
+.nav-logo-text{font-family:'Literata',serif;font-weight:700;font-size:1.05rem;color:var(--ink);letter-spacing:-.02em}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none}
+.nav-links a{
+  color:var(--ink-light);text-decoration:none;font-size:.87rem;font-weight:500;
+  transition:color .25s;position:relative;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;
+  background:var(--accent);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{
+  padding:.5rem 1.3rem;border-radius:50px;
+  background:var(--ink);color:var(--bg);
+  font-weight:600;font-size:.84rem;text-decoration:none;
+  transition:all .3s ease;border:none;cursor:pointer;
+}
+.nav-cta:hover{background:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:8rem 2.5rem 5rem;
+}
+.hero-bg-shape{
+  position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;
+}
+.hero-bg-1{width:600px;height:600px;top:-15%;right:-10%;background:var(--warm-blush);opacity:.6}
+.hero-bg-2{width:450px;height:450px;bottom:-10%;left:-5%;background:var(--warm-sage);opacity:.5}
+.hero-bg-3{width:300px;height:300px;top:40%;left:30%;background:rgba(196,77,43,.04);opacity:.8}
+
+.hero-inner{
+  max-width:1200px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+  position:relative;z-index:2;
+}
+.hero-content{animation:fade-up .9s ease both}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.35rem 1rem;border-radius:50px;
+  background:var(--accent-bg);border:1px solid rgba(196,77,43,.12);
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;
+  color:var(--accent);margin-bottom:1.8rem;letter-spacing:.02em;
+}
+.hero-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:gentle-float 3s ease infinite}
+.hero-title{
+  font-family:'Literata',serif;font-size:clamp(2.6rem,5.5vw,4.2rem);
+  font-weight:800;line-height:1.1;letter-spacing:-.03em;
+  margin-bottom:1.4rem;color:var(--ink);
+}
+.hero-title em{
+  font-style:normal;color:var(--accent);
+  position:relative;display:inline-block;
+}
+.hero-title em::after{
+  content:'';position:absolute;bottom:2px;left:0;right:0;height:3px;
+  background:var(--accent);opacity:.25;border-radius:2px;
+  animation:underline-grow .8s ease .6s both;transform-origin:left;
+}
+.hero-desc{
+  font-size:1.12rem;color:var(--ink-light);line-height:1.7;
+  margin-bottom:2.2rem;max-width:500px;
+}
+.hero-actions{display:flex;gap:.9rem;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.8rem 1.8rem;border-radius:50px;
+  background:var(--accent);color:#fff;
+  font-weight:700;font-size:.92rem;text-decoration:none;
+  transition:all .3s ease;border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(196,77,43,.2);
+}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px);box-shadow:0 8px 28px rgba(196,77,43,.3)}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.8rem 1.8rem;border-radius:50px;
+  background:transparent;border:1.5px solid var(--border);
+  color:var(--ink);font-weight:600;font-size:.92rem;text-decoration:none;
+  transition:all .3s ease;cursor:pointer;
+}
+.btn-outline:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+
+/* HERO DEMO CARD */
+.hero-demo{animation:fade-up .9s ease .2s both}
+.demo-card{
+  background:var(--surface);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);overflow:hidden;
+  box-shadow:var(--shadow-xl);position:relative;
+}
+.demo-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-light),#f0a070);
+}
+.demo-tabs{
+  display:flex;border-bottom:1px solid var(--border-light);
+  background:var(--warm-cream);
+}
+.demo-tab{
+  padding:.7rem 1.4rem;font-size:.78rem;font-weight:600;
+  color:var(--ink-lighter);border:none;background:none;cursor:pointer;
+  position:relative;transition:color .25s;
+}
+.demo-tab.active{color:var(--accent)}
+.demo-tab.active::after{
+  content:'';position:absolute;bottom:-1px;left:.8rem;right:.8rem;
+  height:2px;background:var(--accent);border-radius:1px;
+}
+.demo-before,.demo-after{padding:1.5rem 1.8rem}
+.demo-label{
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:.8rem;
+  display:flex;align-items:center;gap:.4rem;
+}
+.demo-label-bad{color:var(--ink-faint)}
+.demo-label-good{color:var(--accent)}
+.demo-text{
+  font-family:'Literata',serif;font-size:.88rem;line-height:1.8;
+  color:var(--ink-light);
+}
+.demo-text .strike{
+  text-decoration:line-through;color:var(--ink-faint);
+  background:rgba(196,77,43,.04);padding:0 .15rem;border-radius:2px;
+}
+.demo-text .highlight{
+  background:linear-gradient(to bottom,transparent 55%,rgba(196,77,43,.12) 55%);
+  padding:0 .1rem;
+}
+.demo-divider{height:1px;background:var(--border-light);margin:0}
+.demo-footer{
+  padding:.8rem 1.8rem;background:var(--warm-cream);
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.72rem;color:var(--ink-lighter);
+}
+.demo-score{display:flex;align-items:center;gap:.4rem}
+.demo-score-bar{width:80px;height:5px;border-radius:3px;background:var(--border-light);overflow:hidden}
+.demo-score-fill{height:100%;border-radius:3px;background:var(--accent);width:94%}
+.demo-version{font-family:'IBM Plex Mono',monospace;font-weight:600}
+
+/* ===== SECTION GLOBAL ===== */
+section{padding:6rem 2.5rem;position:relative}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--accent);
+  margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;
+}
+.section-label::before{content:'';width:16px;height:1.5px;background:var(--accent);border-radius:1px}
+.section-title{
+  font-family:'Literata',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);
+  font-weight:800;letter-spacing:-.025em;line-height:1.15;margin-bottom:.8rem;
+}
+.section-desc{font-size:1rem;color:var(--ink-light);max-width:560px;margin-bottom:3rem}
+
+/* ===== PATTERNS (KI-Muster) ===== */
+.patterns-section{background:var(--bg2)}
+.patterns-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.2rem;
+}
+.pattern-card{
+  background:var(--surface);border:1px solid var(--border-light);
+  border-radius:var(--radius);padding:1.6rem;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden;
+}
+.pattern-card:hover{
+  transform:translateY(-4px);box-shadow:var(--shadow-lg);
+  border-color:var(--border);
+}
+.pattern-num{
+  font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:600;
+  color:var(--accent);background:var(--accent-bg);
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:7px;margin-bottom:.8rem;
+}
+.pattern-card h3{font-size:1rem;font-weight:700;margin-bottom:.45rem;letter-spacing:-.015em}
+.pattern-card p{font-size:.84rem;color:var(--ink-light);line-height:1.7}
+.pattern-example{
+  margin-top:.8rem;padding:.65rem .9rem;border-radius:var(--radius-sm);
+  background:var(--warm-cream);border-left:2.5px solid var(--accent);
+  font-family:'Literata',serif;font-size:.78rem;color:var(--ink-light);
+  line-height:1.6;font-style:italic;
+}
+
+/* ===== BEFORE/AFTER ===== */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.compare-card{
+  padding:2rem;border-radius:var(--radius);
+  border:1px solid var(--border-light);
+  position:relative;
+}
+.compare-bad{background:rgba(196,77,43,.02)}
+.compare-good{background:var(--warm-cream);border-color:rgba(196,77,43,.15)}
+.compare-badge{
+  position:absolute;top:-10px;left:20px;
+  padding:.25rem .8rem;border-radius:50px;
+  font-family:'IBM Plex Mono',monospace;font-size:.62rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;
+}
+.compare-bad .compare-badge{background:#f0e0da;color:var(--accent-dark)}
+.compare-good .compare-badge{background:var(--accent);color:#fff}
+.compare-card blockquote{
+  font-family:'Literata',serif;font-size:.9rem;line-height:1.8;
+  color:var(--ink-light);border:none;margin:0;padding:0;
+}
+.compare-card blockquote strong{color:var(--ink);font-weight:600}
+
+/* ===== FEATURES ===== */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.feature-card{
+  padding:1.8rem;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--border-light);
+  transition:all .35s ease;
+}
+.feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--border)}
+.feature-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--accent-bg);display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:1rem;
+}
+.feature-card h3{font-size:.98rem;font-weight:700;margin-bottom:.35rem}
+.feature-card p{font-size:.84rem;color:var(--ink-light);line-height:1.7}
+
+/* ===== PROCESS ===== */
+.process-section{background:var(--bg2)}
+.process-steps{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;
+  position:relative;
+}
+.process-step{
+  text-align:center;padding:1.5rem 1rem;
+  border-radius:var(--radius);background:var(--surface);
+  border:1px solid var(--border-light);
+  transition:all .35s ease;position:relative;
+}
+.process-step:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.process-step-num{
+  width:36px;height:36px;border-radius:50%;margin:0 auto .8rem;
+  background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.8rem;
+}
+.process-step h4{font-size:.88rem;font-weight:700;margin-bottom:.3rem}
+.process-step p{font-size:.76rem;color:var(--ink-light);line-height:1.6}
+.process-arrow{
+  position:absolute;top:50%;right:-12px;z-index:2;
+  color:var(--ink-faint);font-size:.8rem;
+}
+
+/* ===== INSTALL ===== */
+.install-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+.install-card{
+  background:var(--surface);border:1px solid var(--border-light);
+  border-radius:var(--radius);padding:2rem;position:relative;
+  transition:all .35s ease;
+}
+.install-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.install-num{
+  position:absolute;top:-12px;left:20px;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--ink);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:700;
+}
+.install-card h3{font-size:.95rem;font-weight:700;margin-bottom:.7rem;margin-top:.3rem}
+.code-block{
+  background:var(--bg-dark);border-radius:var(--radius-sm);
+  padding:.9rem 1rem;font-family:'IBM Plex Mono',monospace;font-size:.76rem;
+  color:#c9c4bc;overflow-x:auto;line-height:1.8;position:relative;
+}
+.code-block .accent-text{color:var(--accent-light)}
+.code-block .dim{color:#736d64}
+.copy-btn{
+  position:absolute;top:.5rem;right:.5rem;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  color:#8a8379;border-radius:6px;padding:.2rem .5rem;
+  font-size:.6rem;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+  transition:all .2s ease;
+}
+.copy-btn:hover{background:rgba(255,255,255,.15);color:#c9c4bc}
+
+/* ===== CHECKLIST ===== */
+.checklist-section{background:var(--bg2)}
+.checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.checklist-item{
+  display:flex;align-items:flex-start;gap:.8rem;
+  padding:1rem 1.2rem;border-radius:var(--radius-sm);
+  background:var(--surface);border:1px solid var(--border-light);
+  transition:all .25s ease;
+}
+.checklist-item:hover{border-color:var(--border);box-shadow:var(--shadow-sm)}
+.checklist-check{
+  width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:800;margin-top:.1rem;
+}
+.checklist-item p{font-size:.86rem;color:var(--ink-light);line-height:1.5}
+.checklist-item strong{color:var(--ink);font-weight:600}
+
+/* ===== FORBIDDEN WORDS ===== */
+.words-cloud{
+  display:flex;flex-wrap:wrap;gap:.45rem;
+  padding:2rem;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--border-light);
+  max-height:200px;overflow:hidden;position:relative;
+}
+.words-cloud::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:60px;
+  background:linear-gradient(transparent,var(--surface));
+}
+.word-tag{
+  padding:.25rem .65rem;border-radius:50px;
+  background:rgba(196,77,43,.05);border:1px solid rgba(196,77,43,.1);
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+  color:var(--accent);text-decoration:line-through;
+  text-decoration-color:rgba(196,77,43,.3);
+}
+
+/* ===== CTA ===== */
+.cta-section{
+  background:var(--bg-dark);color:var(--bg);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(196,77,43,.08),transparent);
+}
+.cta-section .section-title{color:var(--bg);font-size:clamp(2rem,4.5vw,3.2rem)}
+.cta-section .section-desc{color:rgba(250,248,245,.55);max-width:480px;margin:0 auto 2.5rem}
+.cta-buttons{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+.btn-cta-primary{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.85rem 2rem;border-radius:50px;
+  background:var(--accent);color:#fff;
+  font-weight:700;font-size:.95rem;text-decoration:none;
+  transition:all .3s ease;border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(196,77,43,.3);
+}
+.btn-cta-primary:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(196,77,43,.4)}
+.btn-cta-outline{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.85rem 2rem;border-radius:50px;
+  background:transparent;border:1.5px solid rgba(250,248,245,.15);
+  color:var(--bg);font-weight:600;font-size:.95rem;text-decoration:none;
+  transition:all .3s ease;cursor:pointer;
+}
+.btn-cta-outline:hover{border-color:rgba(250,248,245,.35);transform:translateY(-2px)}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:2.5rem 2.5rem;text-align:center;
+  border-top:1px solid var(--border-light);
+  font-size:.8rem;color:var(--ink-lighter);
+}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.footer-links{display:flex;gap:2rem;justify-content:center;margin-bottom:.8rem}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-desc{margin-left:auto;margin-right:auto}
+  .hero-actions{justify-content:center}
+  .hero-demo{max-width:560px;margin:0 auto}
+  .process-steps{grid-template-columns:repeat(3,1fr)}
+  .process-arrow{display:none}
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  section{padding:4rem 1.5rem}
+  nav{padding:.8rem 1.5rem}
+  .nav-links{display:none}
+  .compare-grid,.checklist-grid{grid-template-columns:1fr}
+  .install-grid{grid-template-columns:1fr}
+  .features-grid,.process-steps{grid-template-columns:1fr}
+  .patterns-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">H</div>
+    <span class="nav-logo-text">AI Humanizer</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#demo-section">Demo</a></li>
+    <li><a href="#patterns">Muster</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#process">Ablauf</a></li>
+    <li><a href="#install">Installation</a></li>
+  </ul>
+  <a href="https://github.com/GodModeAI2025/AI-humanizer" class="nav-cta" target="_blank">GitHub</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-shape hero-bg-1"></div>
+  <div class="hero-bg-shape hero-bg-2"></div>
+  <div class="hero-bg-shape hero-bg-3"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        Open Source Skill für Claude &amp; AI Agents — v3.1
+      </div>
+      <h1 class="hero-title">Texte, die nach <em>Mensch</em> klingen. Nicht nach Maschine.</h1>
+      <p class="hero-desc">
+        AI Humanizer erkennt und entfernt 20+ KI-typische Muster aus jedem Text. 
+        Kein Bedeutungsaufblähen, keine Dreiergruppen, keine Chatbot-Floskeln. 
+        Dafür: Haltung, Rhythmus und echte Stimme.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/GodModeAI2025/AI-humanizer" class="btn-primary" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          Skill herunterladen
+        </a>
+        <a href="#demo-section" class="btn-outline">
+          Vorher → Nachher sehen
+        </a>
+      </div>
+    </div>
+    <div class="hero-demo">
+      <div class="demo-card">
+        <div class="demo-tabs">
+          <button class="demo-tab active">Transformation</button>
+          <button class="demo-tab">Checkliste</button>
+        </div>
+        <div class="demo-before">
+          <div class="demo-label demo-label-bad">✕ KI-generiert</div>
+          <p class="demo-text">
+            <span class="strike">Das Experiment lieferte interessante Ergebnisse.</span>
+            <span class="strike">Die Agenten generierten 3 Millionen Zeilen Code.</span>
+            <span class="strike">Einige Entwickler waren beeindruckt, andere skeptisch.</span>
+            <span class="strike">Die Implikationen bleiben unklar.</span>
+          </p>
+        </div>
+        <hr class="demo-divider">
+        <div class="demo-after">
+          <div class="demo-label demo-label-good">✓ Humanisiert</div>
+          <p class="demo-text">
+            <span class="highlight">Ich weiß ehrlich gesagt nicht, was ich davon halten soll.</span>
+            3 Millionen Zeilen Code, während die Menschen vermutlich geschlafen haben.
+            Die eine Hälfte der Dev-Community dreht durch vor Begeisterung, die andere erklärt gerade, warum das nicht zählt.
+            <span class="highlight">Die Wahrheit liegt wohl irgendwo in der langweiligen Mitte</span>, aber ich komme immer wieder auf diese Agenten zurück, die die ganze Nacht durchgearbeitet haben.
+          </p>
+        </div>
+        <div class="demo-footer">
+          <div class="demo-score">
+            Menschlichkeit
+            <div class="demo-score-bar"><div class="demo-score-fill"></div></div>
+            94%
+          </div>
+          <div class="demo-version">v3.1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section id="demo-section">
+  <div class="section-inner">
+    <div class="section-label reveal">Vorher → Nachher</div>
+    <h2 class="section-title reveal">Jedes Muster hat eine Lösung</h2>
+    <p class="section-desc reveal">Drei Beispiele aus dem echten Einsatz. Gleicher Inhalt, komplett anderer Ton.</p>
+
+    <div style="display:flex;flex-direction:column;gap:2rem">
+      <!-- Example 1 -->
+      <div class="compare-grid reveal">
+        <div class="compare-card compare-bad">
+          <div class="compare-badge">Vorher</div>
+          <blockquote>Eingebettet in die atemberaubende Region Gonder liegt Alamata Raya Kobo, eine <strong>pulsierende Stadt mit reichem Kulturerbe</strong> und beeindruckender Naturschönheit.</blockquote>
+        </div>
+        <div class="compare-card compare-good">
+          <div class="compare-badge">Nachher</div>
+          <blockquote>Alamata Raya Kobo ist eine Stadt in der Region Gonder in Äthiopien, <strong>bekannt für ihren Wochenmarkt und eine Kirche aus dem 18. Jahrhundert.</strong></blockquote>
+        </div>
+      </div>
+
+      <!-- Example 2 -->
+      <div class="compare-grid reveal reveal-d1">
+        <div class="compare-card compare-bad">
+          <div class="compare-badge">Vorher</div>
+          <blockquote>Es könnte möglicherweise argumentiert werden, dass die Maßnahme unter Umständen <strong>gewisse positive Auswirkungen</strong> haben könnte.</blockquote>
+        </div>
+        <div class="compare-card compare-good">
+          <div class="compare-badge">Nachher</div>
+          <blockquote>Die Maßnahme <strong>wirkt sich möglicherweise positiv aus.</strong></blockquote>
+        </div>
+      </div>
+
+      <!-- Example 3 -->
+      <div class="compare-grid reveal reveal-d2">
+        <div class="compare-card compare-bad">
+          <div class="compare-badge">Vorher</div>
+          <blockquote>Die Zukunft sieht rosig aus. <strong>Spannende Zeiten liegen vor uns</strong>, während wir diese Reise in Richtung Exzellenz fortsetzen.</blockquote>
+        </div>
+        <div class="compare-card compare-good">
+          <div class="compare-badge">Nachher</div>
+          <blockquote>Das Unternehmen plant, <strong>nächstes Jahr zwei weitere Standorte zu eröffnen.</strong></blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATTERNS -->
+<section class="patterns-section" id="patterns">
+  <div class="section-inner">
+    <div class="section-label reveal">20+ Erkennungsmuster</div>
+    <h2 class="section-title reveal">KI-Texte haben ein Muster.<br>Wir kennen jedes einzelne.</h2>
+    <p class="section-desc reveal">Version 3.1 erkennt diese Kategorien automatisch und korrigiert sie.</p>
+    <div class="patterns-grid">
+      <div class="pattern-card reveal">
+        <div class="pattern-num">01</div>
+        <h3>Bedeutungsaufblähung</h3>
+        <p>„Markiert einen Wendepunkt", „steht als Zeugnis", „unterstreicht die Bedeutung". Klingt nach Pressemitteilung.</p>
+        <div class="pattern-example">→ Durch konkrete Aussagen ersetzen: Was genau passierte?</div>
+      </div>
+      <div class="pattern-card reveal reveal-d1">
+        <div class="pattern-num">02</div>
+        <h3>Werbsprache</h3>
+        <p>„Atemberaubend", „pulsierend", „lebendiges Zentrum", „eingebettet in". Tourismusprospekt-Stil.</p>
+        <div class="pattern-example">→ Neutrale Fakten statt Adjektiv-Lawinen.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d2">
+        <div class="pattern-num">03</div>
+        <h3>Kopula-Vermeidung</h3>
+        <p>„Dient als", „fungiert als", „verfügt über" statt einfach „ist" oder „hat". Unnötige Komplexität.</p>
+        <div class="pattern-example">→ „Die Galerie dient als Ausstellungsraum" wird „Die Galerie ist der Ausstellungsraum."</div>
+      </div>
+      <div class="pattern-card reveal">
+        <div class="pattern-num">04</div>
+        <h3>Synonymkreisel</h3>
+        <p>„Die Protagonistin... die Hauptfigur... die zentrale Gestalt... die Heldin." KI rotiert Begriffe, statt natürlich zu schreiben.</p>
+        <div class="pattern-example">→ Selbes Wort wiederholen ist menschlicher als erzwungene Variation.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d1">
+        <div class="pattern-num">05</div>
+        <h3>Dreiergruppen</h3>
+        <p>Adjektive und Aufzählungen kommen fast immer in Dreiersets: „Innovation, Inspiration und Brancheneinblicke."</p>
+        <div class="pattern-example">→ Auf das Wesentliche kürzen. Zwei reichen oft.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d2">
+        <div class="pattern-num">06</div>
+        <h3>Negative Parallelismen</h3>
+        <p>„Es geht nicht nur um X, sondern auch Y." Die Verneinung ist unnötig.</p>
+        <div class="pattern-example">→ Direkt sagen, was gemeint ist. Ohne Umweg.</div>
+      </div>
+      <div class="pattern-card reveal">
+        <div class="pattern-num">07</div>
+        <h3>Sycophantischer Ton</h3>
+        <p>„Großartige Frage!", „Absolut!", „Exzellente Beobachtung!" Vorauseilende Zustimmung ohne Mehrwert.</p>
+        <div class="pattern-example">→ Streichen. Direkt zur Sache kommen.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d1">
+        <div class="pattern-num">08</div>
+        <h3>Chatbot-Artefakte</h3>
+        <p>„Ich hoffe, das hilft!", „Natürlich!", „Lass mich wissen", „Als KI-Sprachmodell..."</p>
+        <div class="pattern-example">→ Ersatzlos streichen. Verraten sofort die KI-Herkunft.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d2">
+        <div class="pattern-num">09</div>
+        <h3>Generische Schlüsse</h3>
+        <p>„Die Zukunft sieht rosig aus. Spannende Zeiten liegen vor uns." Optimismus ohne Substanz.</p>
+        <div class="pattern-example">→ Konkreten nächsten Schritt benennen oder weglassen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-label reveal">Kernfunktionen</div>
+    <h2 class="section-title reveal">Nicht nur säubern. Persönlichkeit einbauen.</h2>
+    <p class="section-desc reveal">KI-Muster entfernen ist die halbe Arbeit. Ein steriler Text fällt genauso auf. AI Humanizer baut Stimme ein.</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🎯</div>
+        <h3>20+ Erkennungsmuster</h3>
+        <p>Inhalt, Sprache, Stil und Kommunikation. Jede KI-typische Schwäche wird systematisch erkannt und korrigiert.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <div class="feature-icon">🗣️</div>
+        <h3>Persönlichkeit & Seele</h3>
+        <p>Haltung zeigen, Rhythmus variieren, Widersprüche benennen, „Ich" verwenden. Dein Text bekommt einen Puls.</p>
+      </div>
+      <div class="feature-card reveal reveal-d2">
+        <div class="feature-icon">🚫</div>
+        <h3>Verbotene-Wörter-Filter</h3>
+        <p>80+ KI-Hochfrequenzwörter auf einer Blocklist. Von „beleuchten" bis „navigieren", von „Landschaft" bis „Geflecht".</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">✅</div>
+        <h3>Abschluss-Checkliste</h3>
+        <p>13 Prüfpunkte vor der Ausgabe. Gedankenstriche, Dreiergruppen, Chatbot-Artefakte, Anführungszeichen, Stimme.</p>
+      </div>
+      <div class="feature-card reveal reveal-d1">
+        <div class="feature-icon">🇩🇪</div>
+        <h3>Deutsch-optimiert</h3>
+        <p>Deutsche Anführungszeichen, deutsches KI-Vokabular, deutsche Stilregeln. Kein übersetztes Englisch.</p>
+      </div>
+      <div class="feature-card reveal reveal-d2">
+        <div class="feature-icon">🔌</div>
+        <h3>Agent-kompatibel</h3>
+        <p>Als SKILL.md für Claude Code, Cursor, Codex und andere AI Agents. Einfach installieren und sofort nutzen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="section-inner">
+    <div class="section-label reveal">So funktioniert es</div>
+    <h2 class="section-title reveal">Fünf Schritte zur menschlichen Stimme</h2>
+    <p class="section-desc reveal">Der Humanizer arbeitet systematisch. Jeder Schritt baut auf dem vorherigen auf.</p>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="process-step-num">1</div>
+        <h4>Analysieren</h4>
+        <p>Text lesen, Inhalt und Absicht erfassen</p>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step reveal reveal-d1">
+        <div class="process-step-num">2</div>
+        <h4>Erkennen</h4>
+        <p>KI-Muster anhand der 20+ Erkennungsliste identifizieren</p>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step reveal reveal-d2">
+        <div class="process-step-num">3</div>
+        <h4>Überarbeiten</h4>
+        <p>Muster entfernen und Persönlichkeit nach Schreibstil-Regeln einbauen</p>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step reveal reveal-d3">
+        <div class="process-step-num">4</div>
+        <h4>Prüfen</h4>
+        <p>13-Punkte Abschluss-Checkliste abarbeiten</p>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step reveal reveal-d4">
+        <div class="process-step-num">5</div>
+        <h4>Ausgeben</h4>
+        <p>Nur den fertigen Text. Keine Erklärungen, keine Kommentare.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST PREVIEW -->
+<section class="checklist-section">
+  <div class="section-inner">
+    <div class="section-label reveal">Qualitätssicherung</div>
+    <h2 class="section-title reveal">Die 13-Punkte Checkliste</h2>
+    <p class="section-desc reveal">Bevor ein Text ausgegeben wird, muss er alle Prüfpunkte bestehen.</p>
+    <div class="checklist-grid">
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Gedankenstriche</strong> (weder em-dash noch en-dash)</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine verbotenen Wörter</strong> aus der 80+ Blocklist</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Dreiergruppen</strong> bei Adjektiv-Aufzählungen</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine leeren Analysephrasen</strong> mit Partizip am Ende</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Kein Bedeutungs-Vokabular</strong> (Wendepunkt, Zeugnis...)</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Rhythmus variiert</strong> (keine einheitliche Satzlänge)</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Chatbot-Artefakte</strong> oder Disclaimer</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Kein sycophantischer Ton</strong></p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Kopula-Vermeidung</strong> (dient als, fungiert als...)</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine Synonymrotation</strong></p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Werbsprache</strong> (atemberaubend, pulsierend...)</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Deutsche Anführungszeichen</strong> „korrekt" verwendet</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORBIDDEN WORDS -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal">Blocklist</div>
+    <h2 class="section-title reveal">Diese Wörter verraten die Maschine</h2>
+    <p class="section-desc reveal">80+ Begriffe, die seit 2023 KI-Texte markieren. Der Humanizer kennt und vermeidet sie alle.</p>
+    <div class="words-cloud reveal">
+      <span class="word-tag">beleuchten</span>
+      <span class="word-tag">verdeutlichen</span>
+      <span class="word-tag">unterstreichen</span>
+      <span class="word-tag">hervorheben</span>
+      <span class="word-tag">ermöglichen</span>
+      <span class="word-tag">vorantreiben</span>
+      <span class="word-tag">prägen</span>
+      <span class="word-tag">gestalten</span>
+      <span class="word-tag">revolutionieren</span>
+      <span class="word-tag">navigieren</span>
+      <span class="word-tag">Landschaft</span>
+      <span class="word-tag">Geflecht</span>
+      <span class="word-tag">Zusammenspiel</span>
+      <span class="word-tag">Wechselspiel</span>
+      <span class="word-tag">Wendepunkt</span>
+      <span class="word-tag">freischalten</span>
+      <span class="word-tag">bahnbrechend</span>
+      <span class="word-tag">hochmodern</span>
+      <span class="word-tag">disruptiv</span>
+      <span class="word-tag">transformativ</span>
+      <span class="word-tag">spannend</span>
+      <span class="word-tag">bemerkenswert</span>
+      <span class="word-tag">aufschlussreich</span>
+      <span class="word-tag">Tapisserie</span>
+      <span class="word-tag">dient als</span>
+      <span class="word-tag">fungiert als</span>
+      <span class="word-tag">steht als Zeugnis</span>
+      <span class="word-tag">reiches Kulturerbe</span>
+      <span class="word-tag">atemberaubend</span>
+      <span class="word-tag">lebendiges Zentrum</span>
+      <span class="word-tag">darüber hinaus</span>
+      <span class="word-tag">infolgedessen</span>
+      <span class="word-tag">rasant steigend</span>
+      <span class="word-tag">bleibt abzuwarten</span>
+      <span class="word-tag">im Grunde genommen</span>
+      <span class="word-tag">tief eintauchen</span>
+      <span class="word-tag">Licht auf etwas werfen</span>
+      <span class="word-tag">in einer Welt in der</span>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-label reveal">Schnellstart</div>
+    <h2 class="section-title reveal">In 60 Sekunden installiert</h2>
+    <p class="section-desc reveal">Drei Schritte. Kein Build-Prozess, keine Abhängigkeiten.</p>
+    <div class="install-grid">
+      <div class="install-card reveal">
+        <div class="install-num">1</div>
+        <h3>Repository klonen</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/GodModeAI2025/AI-humanizer.git')">Copy</button>
+          <span class="dim">$</span> git clone<br>
+          <span class="accent-text">https://github.com/<br>GodModeAI2025/AI-humanizer</span>.git
+        </div>
+      </div>
+      <div class="install-card reveal reveal-d1">
+        <div class="install-num">2</div>
+        <h3>Skill installieren</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('cp skill.md /your-agent/skills/humanizer/SKILL.md')">Copy</button>
+          <span class="dim">$</span> cp skill.md \<br>
+          <span class="accent-text">/your-agent/skills/</span><br>
+          <span class="accent-text">humanizer/SKILL.md</span>
+        </div>
+      </div>
+      <div class="install-card reveal reveal-d2">
+        <div class="install-num">3</div>
+        <h3>Loslegen</h3>
+        <div class="code-block">
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('Humanisiere diesen Text: ...')">Copy</button>
+          <span class="dim"># In Claude / Agent</span><br><br>
+          <span class="accent-text">„Humanisiere diesen Text:"</span><br>
+          [Text einfügen]<br><br>
+          <span style="color:#7a9e6a">✓ Fertig. Nur der Text.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner" style="position:relative;z-index:2">
+    <div class="section-label reveal" style="color:rgba(250,248,245,.4)">Bereit?</div>
+    <h2 class="section-title reveal">Deine Texte verdienen<br>eine menschliche Stimme.</h2>
+    <p class="section-desc reveal">Open Source. MIT-Lizenz. Für immer kostenlos. Bau mit.</p>
+    <div class="cta-buttons reveal reveal-d1">
+      <a href="https://github.com/GodModeAI2025/AI-humanizer" class="btn-cta-primary" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        Auf GitHub ansehen
+      </a>
+      <a href="#demo-section" class="btn-cta-outline">
+        Beispiele ansehen
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/GodModeAI2025/AI-humanizer" target="_blank">GitHub</a>
+    <a href="https://github.com/GodModeAI2025/AI-humanizer/blob/main/skill.md" target="_blank">skill.md</a>
+    <a href="https://github.com/GodModeAI2025/AI-humanizer/blob/main/LICENSE" target="_blank">MIT Lizenz</a>
+    <a href="https://github.com/GodModeAI2025" target="_blank">GodModeAI2025</a>
+  </div>
+  <p>AI Humanizer v3.1 — Open Source von <a href="https://github.com/GodModeAI2025" target="_blank">GodModeAI2025</a>. Texte für Menschen, von Menschen.</p>
+</footer>
+
+<script>
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
