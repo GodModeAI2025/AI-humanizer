@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Humanizer — Texte menschlicher machen</title>
+<title>AI Humanizer, Texte menschlicher machen</title>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600;7..72,700;7..72,800;7..72,900&family=DM+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -503,11 +503,11 @@ footer a:hover{text-decoration:underline}
     <div class="hero-content">
       <div class="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
-        Open Source Skill für Claude &amp; AI Agents — v3.1
+        Open Source Skill für Claude &amp; AI Agents · v3.2
       </div>
       <h1 class="hero-title">Texte, die nach <em>Mensch</em> klingen. Nicht nach Maschine.</h1>
       <p class="hero-desc">
-        AI Humanizer erkennt und entfernt 20+ KI-typische Muster aus jedem Text. 
+        AI Humanizer erkennt und entfernt 78 KI-typische Muster aus jedem Text. 
         Kein Bedeutungsaufblähen, keine Dreiergruppen, keine Chatbot-Floskeln. 
         Dafür: Haltung, Rhythmus und echte Stimme.
       </p>
@@ -540,10 +540,9 @@ footer a:hover{text-decoration:underline}
         <div class="demo-after">
           <div class="demo-label demo-label-good">✓ Humanisiert</div>
           <p class="demo-text">
-            <span class="highlight">Ich weiß ehrlich gesagt nicht, was ich davon halten soll.</span>
-            3 Millionen Zeilen Code, während die Menschen vermutlich geschlafen haben.
+            <span class="highlight">3 Millionen Zeilen Code in einer Nacht</span>, in der die Menschen geschlafen haben.
             Die eine Hälfte der Dev-Community dreht durch vor Begeisterung, die andere erklärt gerade, warum das nicht zählt.
-            <span class="highlight">Die Wahrheit liegt wohl irgendwo in der langweiligen Mitte</span>, aber ich komme immer wieder auf diese Agenten zurück, die die ganze Nacht durchgearbeitet haben.
+            <span class="highlight">Ich halte beides für voreilig</span>, komme aber immer wieder auf die Stelle zurück, an der niemand mehr zugesehen hat.
           </p>
         </div>
         <div class="demo-footer">
@@ -552,7 +551,7 @@ footer a:hover{text-decoration:underline}
             <div class="demo-score-bar"><div class="demo-score-fill"></div></div>
             94%
           </div>
-          <div class="demo-version">v3.1</div>
+          <div class="demo-version">v3.2</div>
         </div>
       </div>
     </div>
@@ -609,65 +608,102 @@ footer a:hover{text-decoration:underline}
 <!-- PATTERNS -->
 <section class="patterns-section" id="patterns">
   <div class="section-inner">
-    <div class="section-label reveal">20+ Erkennungsmuster</div>
+    <div class="section-label reveal">78 Erkennungsmuster</div>
     <h2 class="section-title reveal">KI-Texte haben ein Muster.<br>Wir kennen jedes einzelne.</h2>
-    <p class="section-desc reveal">Version 3.1 erkennt diese Kategorien automatisch und korrigiert sie.</p>
+    <p class="section-desc reveal">Version 3.2 ordnet 78 Muster in sieben Kategorien: Inhalt, Wortwahl, Satzbau, Aufbau, Ton, Formatierung, Textsorte.</p>
     <div class="patterns-grid">
       <div class="pattern-card reveal">
         <div class="pattern-num">01</div>
         <h3>Bedeutungsaufblähung</h3>
-        <p>„Markiert einen Wendepunkt", „steht als Zeugnis", „unterstreicht die Bedeutung". Klingt nach Pressemitteilung.</p>
+        <p>„Markiert einen Wendepunkt“, „steht als Zeugnis“, „unterstreicht die Bedeutung“. Klingt nach Pressemitteilung.</p>
         <div class="pattern-example">→ Durch konkrete Aussagen ersetzen: Was genau passierte?</div>
       </div>
       <div class="pattern-card reveal reveal-d1">
         <div class="pattern-num">02</div>
         <h3>Werbsprache</h3>
-        <p>„Atemberaubend", „pulsierend", „lebendiges Zentrum", „eingebettet in". Tourismusprospekt-Stil.</p>
+        <p>„Atemberaubend“, „pulsierend“, „lebendiges Zentrum“, „eingebettet in“. Tourismusprospekt-Stil.</p>
         <div class="pattern-example">→ Neutrale Fakten statt Adjektiv-Lawinen.</div>
       </div>
       <div class="pattern-card reveal reveal-d2">
         <div class="pattern-num">03</div>
         <h3>Kopula-Vermeidung</h3>
-        <p>„Dient als", „fungiert als", „verfügt über" statt einfach „ist" oder „hat". Unnötige Komplexität.</p>
-        <div class="pattern-example">→ „Die Galerie dient als Ausstellungsraum" wird „Die Galerie ist der Ausstellungsraum."</div>
+        <p>„Dient als“, „fungiert als“, „verfügt über“ statt einfach „ist“ oder „hat“. Unnötige Komplexität.</p>
+        <div class="pattern-example">→ „Die Galerie dient als Ausstellungsraum“ wird „Die Galerie ist der Ausstellungsraum.“</div>
       </div>
       <div class="pattern-card reveal">
         <div class="pattern-num">04</div>
         <h3>Synonymkreisel</h3>
-        <p>„Die Protagonistin... die Hauptfigur... die zentrale Gestalt... die Heldin." KI rotiert Begriffe, statt natürlich zu schreiben.</p>
+        <p>„Die Protagonistin... die Hauptfigur... die zentrale Gestalt... die Heldin.“ KI rotiert Begriffe, statt natürlich zu schreiben.</p>
         <div class="pattern-example">→ Selbes Wort wiederholen ist menschlicher als erzwungene Variation.</div>
       </div>
       <div class="pattern-card reveal reveal-d1">
         <div class="pattern-num">05</div>
         <h3>Dreiergruppen</h3>
-        <p>Adjektive und Aufzählungen kommen fast immer in Dreiersets: „Innovation, Inspiration und Brancheneinblicke."</p>
+        <p>Adjektive und Aufzählungen kommen fast immer in Dreiersets: „Innovation, Inspiration und Brancheneinblicke.“</p>
         <div class="pattern-example">→ Auf das Wesentliche kürzen. Zwei reichen oft.</div>
       </div>
       <div class="pattern-card reveal reveal-d2">
         <div class="pattern-num">06</div>
         <h3>Negative Parallelismen</h3>
-        <p>„Es geht nicht nur um X, sondern auch Y." Die Verneinung ist unnötig.</p>
+        <p>„Es geht nicht nur um X, sondern auch Y.“ Die Verneinung ist unnötig.</p>
         <div class="pattern-example">→ Direkt sagen, was gemeint ist. Ohne Umweg.</div>
       </div>
       <div class="pattern-card reveal">
         <div class="pattern-num">07</div>
         <h3>Sycophantischer Ton</h3>
-        <p>„Großartige Frage!", „Absolut!", „Exzellente Beobachtung!" Vorauseilende Zustimmung ohne Mehrwert.</p>
+        <p>„Großartige Frage!“, „Absolut!“, „Exzellente Beobachtung!“ Vorauseilende Zustimmung ohne Mehrwert.</p>
         <div class="pattern-example">→ Streichen. Direkt zur Sache kommen.</div>
       </div>
       <div class="pattern-card reveal reveal-d1">
         <div class="pattern-num">08</div>
         <h3>Chatbot-Artefakte</h3>
-        <p>„Ich hoffe, das hilft!", „Natürlich!", „Lass mich wissen", „Als KI-Sprachmodell..."</p>
+        <p>„Ich hoffe, das hilft!“, „Natürlich!“, „Lass mich wissen“, „Als KI-Sprachmodell...“</p>
         <div class="pattern-example">→ Ersatzlos streichen. Verraten sofort die KI-Herkunft.</div>
       </div>
       <div class="pattern-card reveal reveal-d2">
         <div class="pattern-num">09</div>
         <h3>Generische Schlüsse</h3>
-        <p>„Die Zukunft sieht rosig aus. Spannende Zeiten liegen vor uns." Optimismus ohne Substanz.</p>
+        <p>„Die Zukunft sieht rosig aus. Spannende Zeiten liegen vor uns.“ Optimismus ohne Substanz.</p>
         <div class="pattern-example">→ Konkreten nächsten Schritt benennen oder weglassen.</div>
       </div>
+      <div class="pattern-card reveal">
+        <div class="pattern-num">10</div>
+        <h3>Business-Adjektive</h3>
+        <p>„Robust“, „nahtlos“, „ganzheitlich“, „skalierbar“. Klingt gut, benennt keine überprüfbare Eigenschaft.</p>
+        <div class="pattern-example">→ Sagen, was gemeint ist: wie schnell, für wie viele, unter welcher Last.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d1">
+        <div class="pattern-num">11</div>
+        <h3>Demonstrativketten</h3>
+        <p>„Dies verbessert die Effizienz. Dadurch reagieren Unternehmen schneller. Dabei entstehen Möglichkeiten.“</p>
+        <div class="pattern-example">→ Das Subjekt benennen, statt darauf zu zeigen.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d2">
+        <div class="pattern-num">12</div>
+        <h3>Die makellose Büromail</h3>
+        <p>Anlass, Begründung, Zusicherung, Nutzen, nächster Schritt, freundlicher Abschluss. Alle sechs Teile, auch wenn zwei Sätze gereicht hätten.</p>
+        <div class="pattern-example">→ Streichen, was niemand verlangt hat.</div>
+      </div>
+      <div class="pattern-card reveal">
+        <div class="pattern-num">13</div>
+        <h3>Gleichbleibende Flughöhe</h3>
+        <p>Jeder Absatz gleich abstrakt, gleich lang, gleich sorgfältig. Kein Detail, kein Grenzfall, keine Ausnahme.</p>
+        <div class="pattern-example">→ An einer Stelle konkret werden, an anderer kürzen.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d1">
+        <div class="pattern-num">14</div>
+        <h3>Erfundene Konzeptetiketten</h3>
+        <p>„Das Transparenzparadox“, „die Beschleunigungsfalle“. Ein Name ersetzt die Argumentation.</p>
+        <div class="pattern-example">→ Beschreiben, was passiert, statt es zu taufen.</div>
+      </div>
+      <div class="pattern-card reveal reveal-d2">
+        <div class="pattern-num">15</div>
+        <h3>Performative Ehrlichkeit</h3>
+        <p>„Seien wir ehrlich“, „ganz transparent“, „ich gebe offen zu“. Offenheit, die nichts kostet.</p>
+        <div class="pattern-example">→ Die Ankündigung streichen. Was folgt, ist ehrlich oder nicht.</div>
+      </div>
     </div>
+    <p class="section-desc reveal" style="margin-top:2.5rem">Und 63 weitere, von der Kurzsatzdramaturgie über die Liste im Trenchcoat bis zur Zeitgeistphrase.</p>
   </div>
 </section>
 
@@ -680,23 +716,23 @@ footer a:hover{text-decoration:underline}
     <div class="features-grid">
       <div class="feature-card reveal">
         <div class="feature-icon">🎯</div>
-        <h3>20+ Erkennungsmuster</h3>
+        <h3>78 Erkennungsmuster</h3>
         <p>Inhalt, Sprache, Stil und Kommunikation. Jede KI-typische Schwäche wird systematisch erkannt und korrigiert.</p>
       </div>
       <div class="feature-card reveal reveal-d1">
         <div class="feature-icon">🗣️</div>
         <h3>Persönlichkeit & Seele</h3>
-        <p>Haltung zeigen, Rhythmus variieren, Widersprüche benennen, „Ich" verwenden. Dein Text bekommt einen Puls.</p>
+        <p>Haltung zeigen, Rhythmus variieren, Widersprüche benennen, „Ich“ verwenden. Dein Text bekommt einen Puls.</p>
       </div>
       <div class="feature-card reveal reveal-d2">
         <div class="feature-icon">🚫</div>
-        <h3>Verbotene-Wörter-Filter</h3>
-        <p>80+ KI-Hochfrequenzwörter auf einer Blocklist. Von „beleuchten" bis „navigieren", von „Landschaft" bis „Geflecht".</p>
+        <h3>Zwei-Stufen-Wortfilter</h3>
+        <p>67 Ausdrücke werden immer gestrichen, 40 weitere nur gezählt. Gewöhnliche deutsche Wörter bleiben erlaubt.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon">✅</div>
         <h3>Abschluss-Checkliste</h3>
-        <p>13 Prüfpunkte vor der Ausgabe. Gedankenstriche, Dreiergruppen, Chatbot-Artefakte, Anführungszeichen, Stimme.</p>
+        <p>27 Prüfpunkte vor der Ausgabe, gruppiert nach Typografie, Wortwahl, Satzbau, Aufbau und Textsorte.</p>
       </div>
       <div class="feature-card reveal reveal-d1">
         <div class="feature-icon">🇩🇪</div>
@@ -716,35 +752,41 @@ footer a:hover{text-decoration:underline}
 <section class="process-section" id="process">
   <div class="section-inner">
     <div class="section-label reveal">So funktioniert es</div>
-    <h2 class="section-title reveal">Fünf Schritte zur menschlichen Stimme</h2>
+    <h2 class="section-title reveal">Sechs Schritte zur menschlichen Stimme</h2>
     <p class="section-desc reveal">Der Humanizer arbeitet systematisch. Jeder Schritt baut auf dem vorherigen auf.</p>
     <div class="process-steps">
       <div class="process-step reveal">
         <div class="process-step-num">1</div>
-        <h4>Analysieren</h4>
-        <p>Text lesen, Inhalt und Absicht erfassen</p>
+        <h4>Einordnen</h4>
+        <p>Textsorte bestimmen. Eine Mail wird anders geprüft als ein Gutachten</p>
         <span class="process-arrow">→</span>
       </div>
       <div class="process-step reveal reveal-d1">
         <div class="process-step-num">2</div>
-        <h4>Erkennen</h4>
-        <p>KI-Muster anhand der 20+ Erkennungsliste identifizieren</p>
+        <h4>Analysieren</h4>
+        <p>Text lesen, Inhalt und Absicht erfassen</p>
         <span class="process-arrow">→</span>
       </div>
       <div class="process-step reveal reveal-d2">
         <div class="process-step-num">3</div>
-        <h4>Überarbeiten</h4>
-        <p>Muster entfernen und Persönlichkeit nach Schreibstil-Regeln einbauen</p>
+        <h4>Erkennen</h4>
+        <p>KI-Muster anhand der 78 Einträge der Erkennungsliste identifizieren</p>
         <span class="process-arrow">→</span>
       </div>
       <div class="process-step reveal reveal-d3">
         <div class="process-step-num">4</div>
-        <h4>Prüfen</h4>
-        <p>13-Punkte Abschluss-Checkliste abarbeiten</p>
+        <h4>Überarbeiten</h4>
+        <p>Muster entfernen und Persönlichkeit nach Schreibstil-Regeln einbauen</p>
         <span class="process-arrow">→</span>
       </div>
       <div class="process-step reveal reveal-d4">
         <div class="process-step-num">5</div>
+        <h4>Prüfen</h4>
+        <p>27-Punkte Abschluss-Checkliste abarbeiten</p>
+        <span class="process-arrow">→</span>
+      </div>
+      <div class="process-step reveal reveal-d5">
+        <div class="process-step-num">6</div>
         <h4>Ausgeben</h4>
         <p>Nur den fertigen Text. Keine Erklärungen, keine Kommentare.</p>
       </div>
@@ -756,21 +798,25 @@ footer a:hover{text-decoration:underline}
 <section class="checklist-section">
   <div class="section-inner">
     <div class="section-label reveal">Qualitätssicherung</div>
-    <h2 class="section-title reveal">Die 13-Punkte Checkliste</h2>
+    <h2 class="section-title reveal">Die 27-Punkte Checkliste</h2>
     <p class="section-desc reveal">Bevor ein Text ausgegeben wird, muss er alle Prüfpunkte bestehen.</p>
     <div class="checklist-grid">
-      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Gedankenstriche</strong> (weder em-dash noch en-dash)</p></div>
-      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine verbotenen Wörter</strong> aus der 80+ Blocklist</p></div>
-      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Dreiergruppen</strong> bei Adjektiv-Aufzählungen</p></div>
-      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine leeren Analysephrasen</strong> mit Partizip am Ende</p></div>
-      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Kein Bedeutungs-Vokabular</strong> (Wendepunkt, Zeugnis...)</p></div>
-      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Rhythmus variiert</strong> (keine einheitliche Satzlänge)</p></div>
-      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Chatbot-Artefakte</strong> oder Disclaimer</p></div>
-      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Kein sycophantischer Ton</strong></p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Kein Geviertstrich</strong>, Halbgeviertstrich reduziert statt verboten</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Deutsche Anführungszeichen</strong> „korrekt“ geöffnet und geschlossen</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Ausdrücke</strong> aus der harten Streichliste</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Dichtesignale gezählt</strong> und ausgedünnt</p></div>
       <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Kopula-Vermeidung</strong> (dient als, fungiert als...)</p></div>
-      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine Synonymrotation</strong></p></div>
-      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Werbsprache</strong> (atemberaubend, pulsierend...)</p></div>
-      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Deutsche Anführungszeichen</strong> „korrekt" verwendet</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine Business-Adjektive</strong> ohne überprüfbare Eigenschaft</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Dreiergruppen</strong> ohne inhaltlichen Grund</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Keine leeren Analysenachträge</strong>, keine behauptete Kausalität</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Demonstrativketten</strong> (Dies, Dabei, Dadurch, Damit)</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Rhythmus variiert</strong>, ohne in Fragment-Dramaturgie zu kippen</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Kein hohler Schluss</strong>, kein Ringschluss, kein Handlungsaufruf</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Flughöhe wechselt</strong>, mindestens ein konkretes Detail</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Keine Chatbot-Artefakte</strong>, Disclaimer oder Service-Schluss</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Kein sycophantischer Ton</strong>, keine performative Ehrlichkeit</p></div>
+      <div class="checklist-item reveal"><div class="checklist-check">✓</div><p><strong>Bei Mails</strong>: kein Sechs-Teile-Bauplan</p></div>
+      <div class="checklist-item reveal reveal-d1"><div class="checklist-check">✓</div><p><strong>Eine Haltung</strong>, die falsch sein könnte</p></div>
     </div>
   </div>
 </section>
@@ -778,49 +824,96 @@ footer a:hover{text-decoration:underline}
 <!-- FORBIDDEN WORDS -->
 <section>
   <div class="section-inner">
-    <div class="section-label reveal">Blocklist</div>
+    <div class="section-label reveal">Wortfilter</div>
     <h2 class="section-title reveal">Diese Wörter verraten die Maschine</h2>
-    <p class="section-desc reveal">80+ Begriffe, die seit 2023 KI-Texte markieren. Der Humanizer kennt und vermeidet sie alle.</p>
+    <p class="section-desc reveal">67 Ausdrücke werden immer ersetzt. 40 weitere sind korrektes Deutsch und werden nur ausgedünnt, wenn sie sich häufen.</p>
     <div class="words-cloud reveal">
-      <span class="word-tag">beleuchten</span>
-      <span class="word-tag">verdeutlichen</span>
-      <span class="word-tag">unterstreichen</span>
-      <span class="word-tag">hervorheben</span>
-      <span class="word-tag">ermöglichen</span>
-      <span class="word-tag">vorantreiben</span>
-      <span class="word-tag">prägen</span>
-      <span class="word-tag">gestalten</span>
       <span class="word-tag">revolutionieren</span>
-      <span class="word-tag">navigieren</span>
-      <span class="word-tag">Landschaft</span>
-      <span class="word-tag">Geflecht</span>
-      <span class="word-tag">Zusammenspiel</span>
-      <span class="word-tag">Wechselspiel</span>
-      <span class="word-tag">Wendepunkt</span>
-      <span class="word-tag">freischalten</span>
+      <span class="word-tag">disruptiv</span>
       <span class="word-tag">bahnbrechend</span>
       <span class="word-tag">hochmodern</span>
-      <span class="word-tag">disruptiv</span>
       <span class="word-tag">transformativ</span>
-      <span class="word-tag">spannend</span>
-      <span class="word-tag">bemerkenswert</span>
-      <span class="word-tag">aufschlussreich</span>
+      <span class="word-tag">navigieren</span>
+      <span class="word-tag">Landschaft</span>
+      <span class="word-tag">Ökosystem</span>
+      <span class="word-tag">Paradigma</span>
+      <span class="word-tag">Synergie</span>
+      <span class="word-tag">Geflecht</span>
       <span class="word-tag">Tapisserie</span>
+      <span class="word-tag">Zusammenspiel</span>
+      <span class="word-tag">Wechselspiel</span>
+      <span class="word-tag">Mehrwert</span>
+      <span class="word-tag">Potenziale heben</span>
+      <span class="word-tag">Impulse setzen</span>
+      <span class="word-tag">Wendepunkt</span>
+      <span class="word-tag">freischalten</span>
       <span class="word-tag">dient als</span>
       <span class="word-tag">fungiert als</span>
+      <span class="word-tag">erweist sich als</span>
       <span class="word-tag">steht als Zeugnis</span>
+      <span class="word-tag">innovativ</span>
+      <span class="word-tag">robust</span>
+      <span class="word-tag">nahtlos</span>
+      <span class="word-tag">ganzheitlich</span>
+      <span class="word-tag">skalierbar</span>
+      <span class="word-tag">zukunftssicher</span>
+      <span class="word-tag">maßgeschneidert</span>
       <span class="word-tag">reiches Kulturerbe</span>
       <span class="word-tag">atemberaubend</span>
+      <span class="word-tag">pulsierend</span>
       <span class="word-tag">lebendiges Zentrum</span>
-      <span class="word-tag">darüber hinaus</span>
-      <span class="word-tag">infolgedessen</span>
-      <span class="word-tag">rasant steigend</span>
-      <span class="word-tag">bleibt abzuwarten</span>
-      <span class="word-tag">im Grunde genommen</span>
+      <span class="word-tag">eingebettet in</span>
       <span class="word-tag">tief eintauchen</span>
       <span class="word-tag">Licht auf etwas werfen</span>
       <span class="word-tag">in einer Welt in der</span>
+      <span class="word-tag">komplexe Herausforderungen</span>
+      <span class="word-tag">es ist erwähnenswert</span>
+      <span class="word-tag">bleibt abzuwarten</span>
+      <span class="word-tag">Gamechanger</span>
+      <span class="word-tag">Ownership übernehmen</span>
+      <span class="word-tag">zweifellos</span>
+      <span class="word-tag">tiefgreifend</span>
     </div>
+
+    <h2 class="section-title reveal" style="margin-top:5rem">Diese hier sind erlaubt. Bis sie sich häufen.</h2>
+    <p class="section-desc reveal">Korrektes Deutsch, in guten Texten nötig. Verdächtig ist die Dichte, nicht das Wort. Der Humanizer zählt sie und dünnt aus, statt sie zu verbieten.</p>
+    <div class="words-cloud reveal">
+      <span class="word-tag">zudem</span>
+      <span class="word-tag">darüber hinaus</span>
+      <span class="word-tag">außerdem</span>
+      <span class="word-tag">jedoch</span>
+      <span class="word-tag">gleichzeitig</span>
+      <span class="word-tag">dabei</span>
+      <span class="word-tag">dadurch</span>
+      <span class="word-tag">damit</span>
+      <span class="word-tag">infolgedessen</span>
+      <span class="word-tag">nicht zuletzt</span>
+      <span class="word-tag">entscheidend</span>
+      <span class="word-tag">zentral</span>
+      <span class="word-tag">wesentlich</span>
+      <span class="word-tag">relevant</span>
+      <span class="word-tag">deutlich</span>
+      <span class="word-tag">komplex</span>
+      <span class="word-tag">still</span>
+      <span class="word-tag">grundlegend</span>
+      <span class="word-tag">sauber</span>
+      <span class="word-tag">effizient</span>
+      <span class="word-tag">ermöglichen</span>
+      <span class="word-tag">optimieren</span>
+      <span class="word-tag">fördern</span>
+      <span class="word-tag">stärken</span>
+      <span class="word-tag">unterstreichen</span>
+      <span class="word-tag">verdeutlichen</span>
+      <span class="word-tag">beleuchten</span>
+      <span class="word-tag">prägen</span>
+      <span class="word-tag">gestalten</span>
+      <span class="word-tag">vorantreiben</span>
+      <span class="word-tag">adressieren</span>
+      <span class="word-tag">Halbgeviertstrich</span>
+      <span class="word-tag">Doppelpunkt-Titel</span>
+    </div>
+
+    <p class="section-desc reveal" style="margin-top:3rem">Nicht verboten: kann, darf, nur, dass, sehr, könnte, vielleicht, beginnen, erstellen. Das sind gewöhnliche deutsche Wörter. Wer sie meidet, schreibt umständlich, und Umständlichkeit ist selbst ein KI-Merkmal.</p>
   </div>
 </section>
 
@@ -856,7 +949,7 @@ footer a:hover{text-decoration:underline}
         <div class="code-block">
           <button class="copy-btn" onclick="navigator.clipboard.writeText('Humanisiere diesen Text: ...')">Copy</button>
           <span class="dim"># In Claude / Agent</span><br><br>
-          <span class="accent-text">„Humanisiere diesen Text:"</span><br>
+          <span class="accent-text">„Humanisiere diesen Text:“</span><br>
           [Text einfügen]<br><br>
           <span style="color:#7a9e6a">✓ Fertig. Nur der Text.</span>
         </div>
@@ -891,7 +984,7 @@ footer a:hover{text-decoration:underline}
     <a href="https://github.com/GodModeAI2025/AI-humanizer/blob/main/LICENSE" target="_blank">MIT Lizenz</a>
     <a href="https://github.com/GodModeAI2025" target="_blank">GodModeAI2025</a>
   </div>
-  <p>AI Humanizer v3.1 — Open Source von <a href="https://github.com/GodModeAI2025" target="_blank">GodModeAI2025</a>. Texte für Menschen, von Menschen.</p>
+  <p>AI Humanizer v3.2, Open Source von <a href="https://github.com/GodModeAI2025" target="_blank">GodModeAI2025</a>. Texte für Menschen, von Menschen.</p>
 </footer>
 
 <script>
