@@ -575,7 +575,7 @@ Pfeile und typografischer Schmuck, der sich nicht aus dem Inhalt ergibt: „Inpu
 
 Ausschreiben.
 
-Dazu gehören unsichtbare Sonderzeichen, die beim Kopieren aus Chat-Oberflächen mitkommen: Nullbreitenzeichen (U+200B bis U+200D, U+FEFF), bedingte Trennstriche (U+00AD) und der geschützte Bindestrich (U+2011) statt des normalen. Man sieht sie nicht, aber sie stören Suche, Silbentrennung und Rechtschreibprüfung. Entfernen oder durch das normale Zeichen ersetzen.
+Dazu gehören unsichtbare Sonderzeichen, die beim Kopieren aus Chat-Oberflächen mitkommen: Nullbreitenzeichen (U+200B bis U+200D, U+FEFF), bedingte Trennstriche (U+00AD) und der geschützte Bindestrich (U+2011) statt des normalen. Man sieht sie nicht, aber sie stören Suche, Wortzählung und Rechtschreibprüfung. Entfernen oder durch das normale Zeichen ersetzen.
 
 **F7. Der Doppelpunkt-Titel**
 
