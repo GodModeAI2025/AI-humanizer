@@ -3,11 +3,11 @@ name: humanizer
 description: Texte menschlicher klingen lassen, ohne den Inhalt zu verändern. Verwenden bei Anfragen wie "Text humanisieren", "menschlicher schreiben", "natürlicher formulieren", "KI-Stil entfernen", "Text überarbeiten damit er nicht nach KI klingt", oder wenn ein Text authentischer und weniger maschinell wirken soll.
 ---
 
-# Humanizer v3.2
+# Humanizer v3.3
 
 ## Vorgehen
 
-1. Textsorte bestimmen (Essay, Post, Mail, Gutachten, Doku, Sammelauftrag). Manche Regeln gelten je nach Sorte anders, siehe Abschnitt G.
+1. Textsorte bestimmen (Essay, Post, Mail, Gutachten, Doku, Sammelauftrag). Manche Regeln gelten je nach Sorte anders, siehe Abschnitt G. Liegt ein eigener Text des Autors in derselben Textsorte vor, daran ausrichten: Satzlänge, Anrede, typische Wörter. Eine echte Vorlage schlägt jede allgemeine Regel.
 2. Text analysieren und Inhalt erfassen
 3. KI-typische Muster gemäß der Erkennungsliste identifizieren
 4. Text überarbeiten: Muster entfernen UND Persönlichkeit einbauen
@@ -25,6 +25,8 @@ Der Skill unterscheidet zwei Sorten von Befunden. Wer beide gleich behandelt, ma
 **Dichtesignale.** Wörter und Konstruktionen, die für sich genommen korrektes, oft nötiges Deutsch sind. Verdächtig ist ihre Häufung. Beispiel: „zudem“, „dabei“, der Halbgeviertstrich, der Doppelpunkt-Titel. Hier wird gezählt, nicht verboten. Faustregel: kommt ein Dichtesignal in mehr als jedem dritten Absatz vor, greift es zu oft.
 
 Wer Dichtesignale wie harte Befunde behandelt, produziert verkrampftes Deutsch. Das fällt genauso auf wie der KI-Text, den es ersetzen sollte.
+
+Kein einzelnes Muster beweist, dass ein Text von einer KI stammt. Viele Signalwörter sind Gewohnheiten eines bestimmten Modells, und Menschen schreiben sie auch. Belastbarer als einzelne Wörter sind Bauformen: Dreiergruppen, gleichförmige Absätze, der hohle Schluss. Der Skill macht Texte besser. Er ist kein Werkzeug, um KI-Detektoren zu umgehen. Wer danach fragt, bekommt einen besseren Text und den Hinweis, dass das keine Garantie gegen Detektoren ist.
 
 ---
 
@@ -381,6 +383,15 @@ Diese Wörter sind unverdächtig und in guten Texten nötig. Das Problem ist die
 
 Regel: nicht streichen, sondern zählen. Wenn mehr als jeder dritte Absatz so beginnt, die Hälfte entfernen. Der Zusammenhang ergibt sich meist aus dem Inhalt.
 
+**C16. Nominalstil und Funktionsverbgefüge (Dichtesignal)**
+
+Die Handlung steckt im Substantiv, das Verb ist nur noch Hülle: „die Durchführung der Umsetzung erfolgt“, „zur Anwendung kommen“, „eine Entscheidung treffen“, „in Betracht ziehen“, „einer Prüfung unterziehen“, „Berücksichtigung finden“. Dazu Substantivketten auf -ung, -heit, -keit und -ität: „die Sicherstellung der Einhaltung der Vorgaben“. Sprachmodelle schreiben auffällig substantivlastig, auch wenn sie locker formulieren sollen.
+
+Vorher: *Die Einführung der neuen Software führte zu einer deutlichen Reduzierung der Bearbeitungszeit.*
+Nachher: *Mit der neuen Software bearbeiten wir Anträge schneller.*
+
+In Gutachten, Verträgen und Verwaltungstexten ist ein Teil davon Fachsprache. Dort zählen, nicht verbieten. Sonst gilt: Wer handelt, wird Subjekt, die Handlung wird Verb.
+
 ---
 
 ### D. Absatz und Komposition
@@ -564,6 +575,8 @@ Pfeile und typografischer Schmuck, der sich nicht aus dem Inhalt ergibt: „Inpu
 
 Ausschreiben.
 
+Dazu gehören unsichtbare Sonderzeichen, die beim Kopieren aus Chat-Oberflächen mitkommen: Nullbreitenzeichen (U+200B bis U+200D, U+FEFF), bedingte Trennstriche (U+00AD) und der geschützte Bindestrich (U+2011) statt des normalen. Man sieht sie nicht, aber sie stören Suche, Wortzählung und Rechtschreibprüfung. Entfernen oder durch das normale Zeichen ersetzen.
+
 **F7. Der Doppelpunkt-Titel**
 
 Schlagwort, Doppelpunkt, erklärender Nachsatz: „KI im Recht: Chancen und Grenzen“, „Vertrauen: Der unterschätzte Erfolgsfaktor“. Im Journalismus üblich, wird aber reflexhaft auf jede Textsorte angewendet, auch auf Mails und Notizen.
@@ -674,7 +687,7 @@ revolutionieren, disruptiv, bahnbrechend, hochmodern, transformativ, tief eintau
 
 Diese Wörter sind korrektes Deutsch und werden nicht pauschal gestrichen. Sie werden gezählt und ausgedünnt, wenn sie sich häufen:
 
-zudem, darüber hinaus, außerdem, jedoch, gleichzeitig, dabei, dadurch, damit, dies, infolgedessen, nicht zuletzt, in diesem Zusammenhang, vor diesem Hintergrund, entscheidend, zentral, wesentlich, essenziell, relevant, deutlich, komplex, still, grundlegend, sauber, klar, effizient, ermöglichen, optimieren, fördern, stärken, unterstreichen, verdeutlichen, beleuchten, prägen, gestalten, umfassen, vorantreiben, adressieren, unterstützen, Halbgeviertstrich, Doppelpunkt-Titel
+zudem, darüber hinaus, außerdem, jedoch, gleichzeitig, dabei, dadurch, damit, dies, infolgedessen, nicht zuletzt, in diesem Zusammenhang, vor diesem Hintergrund, entscheidend, zentral, wesentlich, essenziell, relevant, deutlich, komplex, still, grundlegend, sauber, klar, effizient, ermöglichen, optimieren, fördern, stärken, unterstreichen, verdeutlichen, beleuchten, prägen, gestalten, umfassen, vorantreiben, adressieren, unterstützen, Halbgeviertstrich, Doppelpunkt-Titel, Funktionsverbgefüge
 
 Ausdrücklich nicht verboten: kann, darf, nur, dass, sehr, könnte, vielleicht, wahrscheinlich, beginnen, erstellen. Das sind gewöhnliche deutsche Wörter. Wer sie meidet, schreibt umständliches Deutsch, und Umständlichkeit ist selbst ein KI-Merkmal.
 
@@ -687,6 +700,7 @@ Typografie
 - [ ] Halbgeviertstrich auf ein vertretbares Maß reduziert?
 - [ ] Deutsche Anführungszeichen, öffnend „ und schließend “, in gleicher Zahl?
 - [ ] Keine Emojis als Gliederung, keine Pfeile, kein Fettdruck im Fließtext?
+- [ ] Keine unsichtbaren Sonderzeichen (Nullbreitenzeichen, bedingte oder geschützte Trennstriche)?
 
 Wortwahl
 - [ ] Keine Ausdrücke aus der harten Streichliste?
@@ -701,6 +715,7 @@ Satzbau
 - [ ] Keine leeren Analysenachträge und keine behauptete Kausalität?
 - [ ] Keine Ketten aus Dies, Dabei, Dadurch, Damit?
 - [ ] Keine Absicherungskaskaden?
+- [ ] Kein Nominalstil, wo ein Verb die Handlung tragen kann?
 - [ ] Satzlänge variiert, ohne in Fragment-Dramaturgie zu kippen?
 
 Aufbau
@@ -731,6 +746,7 @@ Nur den überarbeiteten Text ausgeben. Keine Erklärungen, keine Kommentare, kei
 
 | Version | Änderung |
 |---------|----------|
+| 3.3 | Neues Muster C16 Nominalstil und Funktionsverbgefüge. Vorgehen: vorhandenen Text des Autors als Vorlage nutzen. Klarstellung, dass einzelne Muster keine KI-Herkunft beweisen und der Skill kein Detektor-Umgehungswerkzeug ist. F6 um unsichtbare Sonderzeichen erweitert. |
 | 3.2 | Muster nach Kategorien A bis G statt fortlaufender Nummer, doppelte Nummer 6 behoben. Rund 40 neue Muster aus dem Regelwerk „KI-Sprachmuster im Deutschen vermeiden“: Business-Adjektive, „sauber“, abstrakte Nutzenwörter, übersetztes Englisch, magische Adverbien, Demonstrativketten, künstliche Kausalität, ungefragter Einwand, Kurzsatzdramaturgie, aphoristische Gegensatzpaare, Liste im Trenchcoat, fraktale Zusammenfassungen, gleichbleibende Flughöhe, Verdünnung, Doppelung, vage Zuschreibungen, erfundene Konzeptetiketten, vernünftige Mitte, Zeitgeistphrasen, Analogie-Reflex, performative Ehrlichkeit, Überschriften- und Fettdruckmuster, Meta-Überschriften, Büromail-Bauplan, Textsammlungen. Trennung in harte Streichliste und Dichtesignale, gewöhnliche deutsche Wörter aus dem Verbot entfernt. Gedankenstrich-Regel korrigiert: Geviertstrich raus, Halbgeviertstrich ist korrektes Deutsch. Schließende Anführungszeichen im ganzen Dokument korrigiert. Leitplanken für die Persönlichkeits-Sektion. |
 | 3.1 | Werbsprache wieder eingebaut (aus v2.0); Sycophantischer Ton; Deutsche Anführungszeichen ergänzt |
 | 3.0 | Persönlichkeit und Seele; Kopula-Vermeidung; Synonymkreisel; Falsche Spannen; Herausforderungs-Sektionen; Hedging; Füllphrasen; generische Schlüsse; Berichterstattungs-Aufblähung; Inline-Header-Listen; Emoji-Muster |
