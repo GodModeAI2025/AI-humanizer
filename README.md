@@ -576,6 +576,8 @@ Pfeile und typografischer Schmuck, der sich nicht aus dem Inhalt ergibt: „Inpu
 
 Ausschreiben.
 
+Dazu gehören unsichtbare Sonderzeichen, die beim Kopieren aus Chat-Oberflächen mitkommen: Nullbreitenzeichen (U+200B bis U+200D, U+FEFF), bedingte Trennstriche (U+00AD) und der geschützte Bindestrich (U+2011) statt des normalen. Man sieht sie nicht, aber sie stören Suche, Silbentrennung und Rechtschreibprüfung. Entfernen oder durch das normale Zeichen ersetzen.
+
 **F7. Der Doppelpunkt-Titel**
 
 Schlagwort, Doppelpunkt, erklärender Nachsatz: „KI im Recht: Chancen und Grenzen“, „Vertrauen: Der unterschätzte Erfolgsfaktor“. Im Journalismus üblich, wird aber reflexhaft auf jede Textsorte angewendet, auch auf Mails und Notizen.
@@ -699,6 +701,7 @@ Typografie
 - [ ] Halbgeviertstrich auf ein vertretbares Maß reduziert?
 - [ ] Deutsche Anführungszeichen, öffnend „ und schließend “, in gleicher Zahl?
 - [ ] Keine Emojis als Gliederung, keine Pfeile, kein Fettdruck im Fließtext?
+- [ ] Keine unsichtbaren Sonderzeichen (Nullbreitenzeichen, bedingte oder geschützte Trennstriche)?
 
 Wortwahl
 - [ ] Keine Ausdrücke aus der harten Streichliste?
@@ -744,7 +747,7 @@ Nur den überarbeiteten Text ausgeben. Keine Erklärungen, keine Kommentare, kei
 
 | Version | Änderung |
 |---------|----------|
-| 3.3 | Neues Muster C16 Nominalstil und Funktionsverbgefüge. Vorgehen: vorhandenen Text des Autors als Vorlage nutzen. Klarstellung, dass einzelne Muster keine KI-Herkunft beweisen und der Skill kein Detektor-Umgehungswerkzeug ist. |
+| 3.3 | Neues Muster C16 Nominalstil und Funktionsverbgefüge. Vorgehen: vorhandenen Text des Autors als Vorlage nutzen. Klarstellung, dass einzelne Muster keine KI-Herkunft beweisen und der Skill kein Detektor-Umgehungswerkzeug ist. F6 um unsichtbare Sonderzeichen erweitert. |
 | 3.2 | Muster nach Kategorien A bis G statt fortlaufender Nummer, doppelte Nummer 6 behoben. Rund 40 neue Muster aus dem Regelwerk „KI-Sprachmuster im Deutschen vermeiden“: Business-Adjektive, „sauber“, abstrakte Nutzenwörter, übersetztes Englisch, magische Adverbien, Demonstrativketten, künstliche Kausalität, ungefragter Einwand, Kurzsatzdramaturgie, aphoristische Gegensatzpaare, Liste im Trenchcoat, fraktale Zusammenfassungen, gleichbleibende Flughöhe, Verdünnung, Doppelung, vage Zuschreibungen, erfundene Konzeptetiketten, vernünftige Mitte, Zeitgeistphrasen, Analogie-Reflex, performative Ehrlichkeit, Überschriften- und Fettdruckmuster, Meta-Überschriften, Büromail-Bauplan, Textsammlungen. Trennung in harte Streichliste und Dichtesignale, gewöhnliche deutsche Wörter aus dem Verbot entfernt. Gedankenstrich-Regel korrigiert: Geviertstrich raus, Halbgeviertstrich ist korrektes Deutsch. Schließende Anführungszeichen im ganzen Dokument korrigiert. Leitplanken für die Persönlichkeits-Sektion. |
 | 3.1 | Werbsprache wieder eingebaut (aus v2.0); Sycophantischer Ton; Deutsche Anführungszeichen ergänzt |
 | 3.0 | Persönlichkeit und Seele; Kopula-Vermeidung; Synonymkreisel; Falsche Spannen; Herausforderungs-Sektionen; Hedging; Füllphrasen; generische Schlüsse; Berichterstattungs-Aufblähung; Inline-Header-Listen; Emoji-Muster |
