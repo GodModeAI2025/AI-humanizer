@@ -34,9 +34,13 @@ Kein einzelnes Muster beweist, dass ein Text von einer KI stammt. Viele Signalw�
 
 Der Skill ändert Formulierungen, nicht Inhalte. Drei Sorten von Passagen sind fremder Text und bleiben Zeichen für Zeichen stehen, auch wenn sie voller Muster aus der Erkennungsliste stecken:
 
-- **Zitate und wörtliche Rede.** Alles in Anführungszeichen, jedes eingerückte Zitat, jede zitierte Gesetzes- oder Vertragsstelle, jede Interviewantwort. Ein umgeschriebenes Zitat ist eine Fälschung, kein besserer Text. Wer zitiert und das Zitat für Werbsprache hält, kürzt es oder rahmt es ein, statt es zu glätten.
+- **Zitate und wörtliche Rede.** Jede wörtlich zitierte Passage, jedes eingerückte Zitat, jede zitierte Gesetzes- oder Vertragsstelle, jede Interviewantwort. Ein umgeschriebenes Zitat ist eine Fälschung, kein besserer Text. Wer zitiert und das Zitat für Werbsprache hält, kürzt es oder rahmt es ein, statt es zu glätten.
 - **Code, Befehle, Pfade, Formeln.** Alles in Code-Blöcken und Backticks, dazu Dateinamen, Befehlszeilen und mathematische Ausdrücke.
 - **Eigennamen und feststehende Bezeichnungen.** Produkt-, Firmen- und Projektnamen, Normen, Paragrafen, Aktenzeichen. „Robustes Ökosystem GmbH“ bleibt so stehen.
+
+Gemeint ist fremder Wortlaut, nicht jedes Wort in Anführungszeichen. Setzt der Autor selbst einen Begriff in Anführungszeichen, weil er ihn hervorhebt oder ironisch meint, gehört er ihm und wird normal geprüft. Die Anführungszeichen außen folgen weiter F2, nur der Wortlaut dazwischen bleibt.
+
+Auch die Typografieregeln reichen nicht in geschützte Passagen hinein: In einem Zitat und erst recht in Code bleibt jedes Zeichen, wie es ist, auch ein unsichtbares (F6). Wer es loswerden will, muss die Quelle ändern, nicht das Zitat.
 
 Die Muster gelten für den Text des Autors drumherum. Auch der Satz, der ein Zitat einleitet, wird ganz normal geprüft.
 
@@ -761,7 +765,7 @@ Nur den überarbeiteten Text ausgeben. Keine Erklärungen, keine Kommentare, kei
 
 | Version | Änderung |
 |---------|----------|
-| 3.4 | Neue Sektion „Was nicht angefasst wird“: Zitate, wörtliche Rede, Code und Eigennamen bleiben unverändert. Harte Streichliste: vom Autor genannte Fachbegriffe sind ausgenommen. Ein neuer und ein präzisierter Checklisten-Punkt. |
+| 3.4 | Neue Sektion „Was nicht angefasst wird“: Zitate, wörtliche Rede, Code und Eigennamen bleiben unverändert, auch gegenüber den Typografieregeln F2 und F6. Harte Streichliste: vom Autor genannte Fachbegriffe sind ausgenommen. Ein neuer und ein präzisierter Checklisten-Punkt. |
 | 3.3 | Neues Muster C16 Nominalstil und Funktionsverbgefüge. Vorgehen: vorhandenen Text des Autors als Vorlage nutzen. Klarstellung, dass einzelne Muster keine KI-Herkunft beweisen und der Skill kein Detektor-Umgehungswerkzeug ist. F6 um unsichtbare Sonderzeichen erweitert. |
 | 3.2 | Muster nach Kategorien A bis G statt fortlaufender Nummer, doppelte Nummer 6 behoben. Rund 40 neue Muster aus dem Regelwerk „KI-Sprachmuster im Deutschen vermeiden“: Business-Adjektive, „sauber“, abstrakte Nutzenwörter, übersetztes Englisch, magische Adverbien, Demonstrativketten, künstliche Kausalität, ungefragter Einwand, Kurzsatzdramaturgie, aphoristische Gegensatzpaare, Liste im Trenchcoat, fraktale Zusammenfassungen, gleichbleibende Flughöhe, Verdünnung, Doppelung, vage Zuschreibungen, erfundene Konzeptetiketten, vernünftige Mitte, Zeitgeistphrasen, Analogie-Reflex, performative Ehrlichkeit, Überschriften- und Fettdruckmuster, Meta-Überschriften, Büromail-Bauplan, Textsammlungen. Trennung in harte Streichliste und Dichtesignale, gewöhnliche deutsche Wörter aus dem Verbot entfernt. Gedankenstrich-Regel korrigiert: Geviertstrich raus, Halbgeviertstrich ist korrektes Deutsch. Schließende Anführungszeichen im ganzen Dokument korrigiert. Leitplanken für die Persönlichkeits-Sektion. |
 | 3.1 | Werbsprache wieder eingebaut (aus v2.0); Sycophantischer Ton; Deutsche Anführungszeichen ergänzt |
