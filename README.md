@@ -4,12 +4,12 @@ name: humanizer
 description: Texte menschlicher klingen lassen, ohne den Inhalt zu verändern. Verwenden bei Anfragen wie "Text humanisieren", "menschlicher schreiben", "natürlicher formulieren", "KI-Stil entfernen", "Text überarbeiten damit er nicht nach KI klingt", oder wenn ein Text authentischer und weniger maschinell wirken soll.
 ---
 
-# Humanizer v3.3
+# Humanizer v3.4
 
 ## Vorgehen
 
 1. Textsorte bestimmen (Essay, Post, Mail, Gutachten, Doku, Sammelauftrag). Manche Regeln gelten je nach Sorte anders, siehe Abschnitt G. Liegt ein eigener Text des Autors in derselben Textsorte vor, daran ausrichten: Satzlänge, Anrede, typische Wörter. Eine echte Vorlage schlägt jede allgemeine Regel.
-2. Text analysieren und Inhalt erfassen
+2. Text analysieren und Inhalt erfassen. Zitate, Code und Eigennamen markieren, sie bleiben unverändert (siehe „Was nicht angefasst wird“)
 3. KI-typische Muster gemäß der Erkennungsliste identifizieren
 4. Text überarbeiten: Muster entfernen UND Persönlichkeit einbauen
 5. Abschluss-Checkliste abarbeiten
@@ -28,6 +28,22 @@ Der Skill unterscheidet zwei Sorten von Befunden. Wer beide gleich behandelt, ma
 Wer Dichtesignale wie harte Befunde behandelt, produziert verkrampftes Deutsch. Das fällt genauso auf wie der KI-Text, den es ersetzen sollte.
 
 Kein einzelnes Muster beweist, dass ein Text von einer KI stammt. Viele Signalwörter sind Gewohnheiten eines bestimmten Modells, und Menschen schreiben sie auch. Belastbarer als einzelne Wörter sind Bauformen: Dreiergruppen, gleichförmige Absätze, der hohle Schluss. Der Skill macht Texte besser. Er ist kein Werkzeug, um KI-Detektoren zu umgehen. Wer danach fragt, bekommt einen besseren Text und den Hinweis, dass das keine Garantie gegen Detektoren ist.
+
+---
+
+## WAS NICHT ANGEFASST WIRD
+
+Der Skill ändert Formulierungen, nicht Inhalte. Drei Sorten von Passagen sind fremder Text und bleiben Zeichen für Zeichen stehen, auch wenn sie voller Muster aus der Erkennungsliste stecken:
+
+- **Zitate und wörtliche Rede.** Jede wörtlich zitierte Passage, jedes eingerückte Zitat, jede zitierte Gesetzes- oder Vertragsstelle, jede Interviewantwort. Ein umgeschriebenes Zitat ist eine Fälschung, kein besserer Text. Wer zitiert und das Zitat für Werbsprache hält, kürzt es oder rahmt es ein, statt es zu glätten.
+- **Code, Befehle, Pfade, Formeln.** Alles in Code-Blöcken und Backticks, dazu Dateinamen, Befehlszeilen und mathematische Ausdrücke.
+- **Eigennamen und feststehende Bezeichnungen.** Produkt-, Firmen- und Projektnamen, Normen, Paragrafen, Aktenzeichen. „Robustes Ökosystem GmbH“ bleibt so stehen.
+
+Gemeint ist fremder Wortlaut, nicht jedes Wort in Anführungszeichen. Setzt der Autor selbst einen Begriff in Anführungszeichen, weil er ihn hervorhebt oder ironisch meint, gehört er ihm und wird normal geprüft. Die Anführungszeichen außen folgen weiter F2, nur der Wortlaut dazwischen bleibt.
+
+Auch die Typografieregeln reichen nicht in geschützte Passagen hinein: In einem Zitat und erst recht in Code bleibt jedes Zeichen, wie es ist, auch ein unsichtbares (F6). Wer es loswerden will, muss die Quelle ändern, nicht das Zitat.
+
+Die Muster gelten für den Text des Autors drumherum. Auch der Satz, der ein Zitat einleitet, wird ganz normal geprüft.
 
 ---
 
@@ -684,6 +700,8 @@ Diese Ausdrücke werden ersetzt oder gestrichen, unabhängig von der Häufigkeit
 
 revolutionieren, disruptiv, bahnbrechend, hochmodern, transformativ, tief eintauchen, eintauchen (übertragen), Licht auf etwas werfen, erhellen, enthüllen, in die Höhe schießen, freischalten, Wendepunkt, in einer Welt in der, sich ständig wandelnd, reiches Kulturerbe, atemberaubend, malerisch, pulsierend, lebendiges Zentrum, eingebettet in, steht als Zeugnis, spielt eine entscheidende Rolle, markiert einen Wendepunkt, dient als, fungiert als, erweist sich als, gilt als, verkörpert, stellt einen Meilenstein dar, Zusammenspiel, Wechselspiel, Geflecht, Tapisserie, Landschaft (übertragen), Ökosystem (übertragen), Paradigma, Synergie, Mehrwert, Potenziale heben, Impulse setzen, nachhaltige Wirkung, auf das nächste Level, Gamechanger, Ownership übernehmen, mit dem Publikum resonieren, das Narrativ verändern, durch diese Linse betrachtet, innovativ, robust, nahtlos, ganzheitlich, zukunftssicher, skalierbar, leistungsstark, maßgeschneidert, komplexe Herausforderungen, vielfältige Anforderungen, anspruchsvolles Umfeld, vielschichtige Fragestellungen, es bleibt abzuwarten, es ist erwähnenswert, bemerkenswert ist, zweifellos, tiefgreifend, Am Ende steht der Mensch im Mittelpunkt, Chancen nutzen und Risiken minimieren
 
+Nennt der Autor Begriffe, die bleiben sollen, gelten sie nicht mehr als harter Befund. Das ist kein Freibrief: Steht das Wort an einer Stelle leer da, wird es trotzdem ersetzt. Aber „robust“ in einem Statik-Gutachten, „skalierbar“ in einer Architekturbeschreibung und „Ökosystem“ in einem Text über Moore sind Fachsprache, nicht Marketing. Dasselbe gilt für Begriffe, über die der Text selbst handelt.
+
 ### Dichtesignale
 
 Diese Wörter sind korrektes Deutsch und werden nicht pauschal gestrichen. Sie werden gezählt und ausgedünnt, wenn sie sich häufen:
@@ -704,7 +722,7 @@ Typografie
 - [ ] Keine unsichtbaren Sonderzeichen (Nullbreitenzeichen, bedingte oder geschützte Trennstriche)?
 
 Wortwahl
-- [ ] Keine Ausdrücke aus der harten Streichliste?
+- [ ] Keine Ausdrücke aus der harten Streichliste, abzüglich der vom Autor genannten Begriffe?
 - [ ] Dichtesignale gezählt und ausgedünnt?
 - [ ] Keine Kopula-Vermeidung (dient als, fungiert als, verfügt über)?
 - [ ] Keine Synonymrotation für denselben Gegenstand?
@@ -733,6 +751,7 @@ Ton und Textsorte
 - [ ] Keine Werbsprache, keine Zeitgeistphrase, keine vernünftige Mitte?
 - [ ] Bei Mails: kein Sechs-Teile-Bauplan, höchstens eine Wenn-dann-Absicherung?
 - [ ] Bei mehreren Texten: unterschiedliche Länge und Struktur?
+- [ ] Zitate, Code und Eigennamen unverändert übernommen?
 - [ ] Hat der Text eine erkennbare Haltung, die falsch sein könnte?
 
 ---
@@ -747,6 +766,7 @@ Nur den überarbeiteten Text ausgeben. Keine Erklärungen, keine Kommentare, kei
 
 | Version | Änderung |
 |---------|----------|
+| 3.4 | Neue Sektion „Was nicht angefasst wird“: Zitate, wörtliche Rede, Code und Eigennamen bleiben unverändert, auch gegenüber den Typografieregeln F2 und F6. Harte Streichliste: vom Autor genannte Fachbegriffe sind ausgenommen. Ein neuer und ein präzisierter Checklisten-Punkt. |
 | 3.3 | Neues Muster C16 Nominalstil und Funktionsverbgefüge. Vorgehen: vorhandenen Text des Autors als Vorlage nutzen. Klarstellung, dass einzelne Muster keine KI-Herkunft beweisen und der Skill kein Detektor-Umgehungswerkzeug ist. F6 um unsichtbare Sonderzeichen erweitert. |
 | 3.2 | Muster nach Kategorien A bis G statt fortlaufender Nummer, doppelte Nummer 6 behoben. Rund 40 neue Muster aus dem Regelwerk „KI-Sprachmuster im Deutschen vermeiden“: Business-Adjektive, „sauber“, abstrakte Nutzenwörter, übersetztes Englisch, magische Adverbien, Demonstrativketten, künstliche Kausalität, ungefragter Einwand, Kurzsatzdramaturgie, aphoristische Gegensatzpaare, Liste im Trenchcoat, fraktale Zusammenfassungen, gleichbleibende Flughöhe, Verdünnung, Doppelung, vage Zuschreibungen, erfundene Konzeptetiketten, vernünftige Mitte, Zeitgeistphrasen, Analogie-Reflex, performative Ehrlichkeit, Überschriften- und Fettdruckmuster, Meta-Überschriften, Büromail-Bauplan, Textsammlungen. Trennung in harte Streichliste und Dichtesignale, gewöhnliche deutsche Wörter aus dem Verbot entfernt. Gedankenstrich-Regel korrigiert: Geviertstrich raus, Halbgeviertstrich ist korrektes Deutsch. Schließende Anführungszeichen im ganzen Dokument korrigiert. Leitplanken für die Persönlichkeits-Sektion. |
 | 3.1 | Werbsprache wieder eingebaut (aus v2.0); Sycophantischer Ton; Deutsche Anführungszeichen ergänzt |
